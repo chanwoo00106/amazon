@@ -11,7 +11,7 @@ services:
 
   mongo-express:
     container_name: mongo-express
-    image: mongo:latest
+    image: mongo-express
     environment:
       - ME_CONFIG_MONGODB_SERVER=mongo
       - ME_CONFIG_MONGODB_PORT=27017
