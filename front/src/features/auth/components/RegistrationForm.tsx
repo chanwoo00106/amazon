@@ -8,12 +8,19 @@ import {
   Typography
 } from '@mui/material'
 import { Box } from '@mui/system'
-import { FormEvent } from 'react'
+import { SubmitHandler, useForm } from 'react-hook-form'
+
+interface FormValues {
+  name: string
+  email: string
+  password: string
+  confirmPassword: string
+}
 
 const Registration = () => {
-  const onSubmit = (e: FormEvent<HTMLFormElement>) => {
-    e.preventDefault()
-    console.log('hello')
+  const { register, handleSubmit } = useForm<FormValues>()
+  const onSubmit: SubmitHandler<FormValues> = form => {
+    console.log(form)
   }
 
   return (
@@ -26,7 +33,7 @@ const Registration = () => {
         marginTop: 2
       }}
     >
-      <form onSubmit={onSubmit}>
+      <form onSubmit={handleSubmit(onSubmit)}>
         <Grid container direction="column" justifyContent="flex-start">
           <Typography variant="h4" component="h1">
             Create account
@@ -39,6 +46,7 @@ const Registration = () => {
             Your name
           </InputLabel>
           <TextField
+            {...register('name', { required: true })}
             type="text"
             name="name"
             id="name"
@@ -53,6 +61,7 @@ const Registration = () => {
             Email
           </InputLabel>
           <TextField
+            {...register('email', { required: true })}
             type="email"
             name="email"
             id="email"
@@ -67,7 +76,8 @@ const Registration = () => {
             Password
           </InputLabel>
           <TextField
-            type="text"
+            {...register('password', { required: true })}
+            type="password"
             name="password"
             id="password"
             variant="outlined"
@@ -82,18 +92,22 @@ const Registration = () => {
             Re-enter password
           </InputLabel>
           <TextField
-            type="text"
+            {...register('confirmPassword', { required: true })}
+            type="password"
             name="confirmPassword"
             id="confirmPassword"
             variant="outlined"
             size="small"
             placeholder="Minimum 6 charaters required"
           />
+
           <Button
             variant="contained"
+            type="submit"
             style={{
               marginTop: '16px',
               height: '31px',
+              width: '100%',
               backgroundColor: '#f0c14b',
               color: 'black',
               borderColor: '#a88734 #9c7e31 #846a29',
